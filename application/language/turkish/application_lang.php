@@ -148,6 +148,7 @@ $lang['application_start_date'] = 'Başlangıç Tarihi';
 $lang['application_start_timer'] = 'Zamanlayıcıyı Başlat';
 $lang['application_statistics'] = 'İstatistikler';
 $lang['application_status'] = 'Durumlar';
+$lang['application_products'] = 'Stok';
 $lang['application_stop_timer'] = 'Zamanlayıcıyı Durdur';
 $lang['application_street'] = 'Sokak';
 $lang['application_sub_total'] = 'Ara Toplam';

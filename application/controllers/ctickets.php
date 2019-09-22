@@ -6,6 +6,9 @@ class cTickets extends MY_Controller {
 	{
 		parent::__construct();
 		$access = FALSE;
+
+        $this->load->model('model_products');
+
 		if($this->client){	
 			foreach ($this->view_data['menu'] as $key => $value) { 
 				if($value->link == "ctickets"){ $access = TRUE;}
@@ -51,7 +54,12 @@ class cTickets extends MY_Controller {
 		$this->content_view = 'tickets/client_views/all';
 	}
 	function create()
-	{	
+	{
+
+        $data = $this->model_products->getProductData();
+
+        $this->view_data['erdo']=$data;
+
 		if($_POST){
 			$config['upload_path'] = './files/media/';
 			$config['encrypt_name'] = TRUE;
@@ -80,6 +88,10 @@ class cTickets extends MY_Controller {
 			$_POST['subject'] = htmlspecialchars($_POST['subject']);
 			$ticket_reference = Setting::first();
 			$_POST['reference'] = $ticket_reference->ticket_reference;
+            $_POST['productname'];
+            $_POST['productadet'];
+            $_POST['start'];
+            $_POST['end'];
 			$ticket = Ticket::create($_POST);
 			$new_ticket_reference = $_POST['reference']+1;			
 			$ticket_reference->update_attributes(array('ticket_reference' => $new_ticket_reference));
@@ -104,21 +116,24 @@ class cTickets extends MY_Controller {
        					redirect('ctickets');
        					}
        		else{$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_create_ticket_success'));
+       		    //$this->view_data["anilabi"];
+                $this->session->set_flashdata('success1','Kayıt Başarıyla Eklendi!');
 
-  				if(isset($user->email) && isset($ticket->reference)){
+                if(isset($user->email) && isset($ticket->reference)){
 					send_ticket_notification($user->email, '[Ticket#'.$ticket->reference.'] - '.$_POST['subject'], $_POST['text'], $ticket->id, $email_attachment);
 				}
 				if(isset($client->email) && isset($ticket->reference)){
 					send_ticket_notification($client->email, '[Ticket#'.$ticket->reference.'] - '.$_POST['subject'], $_POST['text'], $ticket->id, $email_attachment);
 				}
 				
-
+				//redirect('/ctickets');
        			redirect('ctickets/view/'.$ticket->id);
        			}
 			
 		}else
 		{
-			$this->theme_view = 'modal';
+
+            $this->theme_view = 'modal';
 			$this->view_data['title'] = $this->lang->line('application_create_ticket');
 			$this->view_data['form_action'] = 'ctickets/create';
 			$this->content_view = 'tickets/client_views/_ticket';
@@ -135,7 +150,7 @@ class cTickets extends MY_Controller {
 
 		if(!$this->view_data['ticket']){redirect('ctickets');}
 		if($this->view_data['ticket']->company_id != $this->client->company->id || $this->view_data['ticket']->client_id != $this->client->id){ redirect('ctickets');}
-		$this->view_data['form_action'] = 'ctickets/article/'.$id.'/add';
+        $this->view_data['form_action'] = 'ctickets/article/'.$id.'/add';
 		
 	}
 	function article($id = FALSE, $condition = FALSE, $article_id = FALSE)
@@ -195,7 +210,8 @@ class cTickets extends MY_Controller {
 
 		       		if(!$article){$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_save_article_error'));}
 		       		else{$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_save_article_success'));}
-					redirect('ctickets/view/'.$id);
+
+                    redirect('ctickets/view/'.$id);
 				}else
 				{
 					$this->theme_view = 'modal';

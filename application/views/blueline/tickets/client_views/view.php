@@ -155,7 +155,7 @@
 			 		</div>
 			  <?php endforeach;?>
 
-			<div class="article-content">					
+			<div class="article-content">
 					<div class="article">
 						<div class="article-header">
 					 	<div class="article-title">
@@ -178,8 +178,16 @@
 							</div>
 					 </div>
 					 <div class="article-body">
-						<?=$ticket->text;?>
-					</div>
+
+                         <p>Talep Adı:<span style="margin-left: 50px;background-color: cornflowerblue " class="badge badge-pill badge-default"><?=$ticket->text;?></span></p>
+
+                         <p >Başlangıç Tarihi:<span style="margin-left: 10px;background-color: #2BBBAD" class="badge badge-info"><?=$ticket->start;?></span></p>
+                         <p>Bitiş Tarihi:<span style="margin-left: 45px; background-color: #2BBBAD" class="badge badge-pill badge-default"><?=$ticket->end;?><br></span></p>
+
+                         <p>Bitiş Tarihi:<span style="margin-left: 45px; background-color: #FF9800" class="badge badge-pill badge-default"> <?=$ticket->productname;?><br></span></p>
+
+
+                     </div>
 						<?php if (isset($ticket->ticket_has_attachments[0])) {
                     echo '<hr>';
                 } ?>
@@ -190,7 +198,22 @@
                             ?>
 			 				<a class="label label-info" <?=($image) ? 'data-lightbox="ticket' . $ticket->id . '"' : ''?> href="<?=base_url()?>ctickets/attachment/<?php echo $ticket_attachments->savename; ?>"><?php echo $ticket_attachments->filename; ?></a>
 			 				<?php endforeach;?>
-					
+
+
+
+                        <?php if($this->session->flashdata('success1')){?>
+                            <!--           <div class="alert alert-success" role="alert">-->
+                            <!--               <strong>Kayıt Başarılı!</strong> Bir sonraki kayda geçebilirsiniz.-->
+                            <!--           </div>-->
+                            <script>
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Talep Başarıyla Gönderildi',
+                                    text: 'Lütfen Talebinizin Onaylanmasını Bekleyiniz!',
+                                })
+                            </script>
+                        <?php }?>
+
 					</div>
 			</div>
 			 
@@ -198,4 +221,7 @@
 	  </div>
 	</div>
 	</div>
+
+
+
 </div>

@@ -30,7 +30,9 @@ class Products extends Admin_Controller
             //render templatede html head js dosyaları kayıyıor en alta source koddan bak görürsün.
         //$this->render_template('products/index', $this->data);
         //$this->content_view = 'products/create';
+
         $this->content_view = 'products/index';
+        //$this->render_template('blueline/products/index',$this->data);
 
 
     }
@@ -56,6 +58,8 @@ class Products extends Admin_Controller
             //$this->session->set_flashdata('message', 'success:' . 'Stoğa Eklendi');
 
         }
+        //hata verdir
+        $this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_create_item_fail'));
         redirect(site_url("/products"));
     }
     /*
@@ -316,9 +320,9 @@ class Products extends Admin_Controller
     */
     public function remove()
     {
-        if(!in_array('deleteProduct', $this->permission)) {
+       /* if(!in_array('deleteProduct', $this->permission)) {
             redirect('dashboard', 'refresh');
-        }
+        }*/
 
         $product_id = $this->input->post('product_id');
 
@@ -340,6 +344,8 @@ class Products extends Admin_Controller
         }
 
         echo json_encode($response);
+        //echo 'silindi';
+
     }
 
 }

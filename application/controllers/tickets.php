@@ -8,6 +8,9 @@ class Tickets extends MY_Controller
     {
         parent::__construct();
         $access = false;
+
+
+
         $link = '/' . $this->uri->uri_string();
 
         if ($this->client) {
@@ -215,7 +218,6 @@ class Tickets extends MY_Controller
                 if (isset($notify_client)) {
                     send_ticket_notification($client->email, '[Ticket#' . $ticket->reference . '] - ' . $_POST['subject'], $_POST['text'], $ticket->id, $email_attachment);
                 }
-
                 redirect('tickets/view/' . $ticket->id);
             }
         } else {

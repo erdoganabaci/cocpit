@@ -29,6 +29,8 @@ $lang['messages_delete_item_error'] = "Bileşen silinirken bir sorun oluştu!";
 $lang['messages_delete_item_success'] = "Bileşen silindi!";
 $lang['messages_create_item_error'] = "Bileşen oluşturulurken bir sorun oluştu!";
 $lang['messages_create_item_success'] = "Bileşen eklendi!";
+$lang['messages_create_item_fail'] = "Hata Lütfen Tüm Bileşenleri Doldurunuz!";
+
 $lang['messages_create_project_error'] = "Proje oluşturulurken bir sorun oluştu!";
 $lang['messages_create_project_success'] = "Yeni proje oluşturuldu!";
 $lang['messages_save_project_error'] = "Yeni proje kaydedilirken bir sorun oluştu!";

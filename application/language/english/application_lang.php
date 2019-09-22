@@ -42,6 +42,8 @@ $lang['application_created_on'] = 'Created on';
 $lang['application_currency'] = 'Currency';
 $lang['application_dashboard'] = 'Dashboard';
 $lang['application_date'] = 'Date';
+$lang['application_products'] = 'Stock';
+
 $lang['application_date_format'] = 'Date Format';
 $lang['application_deadline'] = 'Deadline';
 $lang['application_default_currency'] = 'Default Currency';

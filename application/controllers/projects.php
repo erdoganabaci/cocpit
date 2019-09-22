@@ -8,6 +8,12 @@ class Projects extends MY_Controller
     {
         parent::__construct();
         $access = false;
+        $this->load->model('model_products');
+
+        $data = $this->model_products->getProductData();
+
+        $this->view_data['erdo']=$data;
+
         if ($this->client) {
             if ($this->input->cookie('fc2_link') != "") {
                 $link = $this->input->cookie('fc2_link');
@@ -40,6 +46,7 @@ class Projects extends MY_Controller
     }
     public function index()
     {
+
         $options = array('conditions' => 'progress < 100', 'order' => 'id DESC', 'include' => array('company', 'project_has_workers'));
         if ($this->user->admin == 0) {
             $comp_array = array();
@@ -56,18 +63,17 @@ class Projects extends MY_Controller
                 $result = array_map("unserialize", array_unique(array_map("serialize", $result), SORT_STRING));
                 //array is sorted on the bases of id
                 sort($result);
-
+                $this->view_data['projecterdo'] = "sdfa";
                 $this->view_data['project'] = $result;
             } else {
                 $this->view_data['project'] = $this->user->projects;
             }
         } else {
-            $this->view_data['project'] = Project::all($options);
+           $this->view_data['project'] = Project::all($options);
         }
         $this->content_view = 'projects/all';
         $this->view_data['projects_assigned_to_me'] = ProjectHasWorker::find_by_sql('select count(distinct(projects.id)) AS "amount" FROM projects, project_has_workers WHERE projects.progress != "100" AND (projects.id = project_has_workers.project_id AND project_has_workers.user_id = "'.$this->user->id.'") ');
         $this->view_data['tasks_assigned_to_me'] = ProjectHasTask::count(array('conditions' => 'user_id = '.$this->user->id.' and status = "open"'));
-
         $now = time();
         $beginning_of_week = strtotime('last Monday', $now); // BEGINNING of the week
         $end_of_week = strtotime('next Sunday', $now) + 86400; // END of the last day of the week
@@ -145,6 +151,7 @@ class Projects extends MY_Controller
     }
     public function create()
     {
+
         if ($_POST) {
             unset($_POST['send']);
             $_POST['datetime'] = time();
@@ -158,6 +165,7 @@ class Projects extends MY_Controller
             if (!$project) {
                 $this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_create_project_error'));
             } else {
+
                 $this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_create_project_success'));
                 $attributes = array('project_id' => $project->id, 'user_id' => $this->user->id);
                 ProjectHasWorker::create($attributes);
@@ -459,6 +467,7 @@ class Projects extends MY_Controller
     }
     public function view($id = false, $taskId = false)
     {
+
         $this->load->helper('file');
         $this->view_data['submenu'] = array();
         $this->view_data['project'] = Project::find($id);

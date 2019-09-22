@@ -1,4 +1,6 @@
-<?php 
+
+
+<?php
 $attributes = array('class' => '', 'id' => '_project');
 echo form_open($form_action, $attributes);
 if(isset($project)){ ?>
@@ -14,17 +16,40 @@ if(isset($project)){ ?>
         <?php if(!empty($core_settings->project_prefix)){ ?></div><?php } ?>
 </div>
 
+
 <div class="form-group">
-        <label for="client"><?=$this->lang->line('application_client');?></label><br>
-        <?php $options = array();
-                $options['0'] = '-';
-                foreach ($companies as $value):  
-                $options[$value->id] = $value->name;
-                endforeach;
-        if(isset($project) && is_object($project->company)){$client = $project->company->id;}else{$client = "";}
-        echo form_dropdown('company_id', $options, $client, 'style="width:100%" class="chosen-select"');?>
-        
+    <label for="client"><?=$this->lang->line('application_client');?></label><br>
+    <?php $options = array();
+    $options['0'] = '-';
+    foreach ($companies as $value):
+        $options[$value->id] = $value->name;
+    endforeach;
+    if(isset($project) && is_object($project->company)){$client = $project->company->id;}else{$client = "";}
+    echo form_dropdown('company_id', $options, $client, 'style="width:100%" class="chosen-select"');?>
+
 </div>
+
+
+
+    <div class="form-group " style="width:100% ; background-color: white"  >
+        <label for="client"> Ürün</label><br>
+        <select class="form-control" style="width:100% ; height: 30px " id="productstok">
+            <option value="0">-- Lütfen Seçim Yapınız --</option>
+            <?php foreach($erdo as $row){ ?>
+                <option value="<?php echo $row["qty"] ;?>"><?php echo $row["name"];?></option>
+            <?php } ?>
+
+        </select>
+
+    </div>
+
+
+<div class="form-group">
+    <label for="name">Ürün Talep Miktarı *</label>
+    <input type="tel" name="name" class="form-control" id="stokmiktari"  value="" placeholder="0" required/>
+</div>
+
+
 <div class="form-group">
                         <label for="progress"><?=$this->lang->line('application_progress');?> <span id="progress-amount"><?php if(isset($project)){echo $project->progress;}else{echo "0";} ?></span> %</label>
                           <div class="slider-group">
@@ -109,5 +134,39 @@ if(isset($project)){ ?>
         <input type="submit" name="send" class="btn btn-primary" value="<?=$this->lang->line('application_save');?>"/>
         <a class="btn btn-default" data-dismiss="modal"><?=$this->lang->line('application_close');?></a>
         </div>
+
+<script>
+
+
+
+
+    $('#productstok').change(function(e){
+        e.preventDefault();
+        $('#stokmiktari').attr("placeholder",$('#productstok').val());
+
+    });
+
+    $("#stokmiktari").keypress(function(event) {
+        return /\d/.test(String.fromCharCode(event.keyCode));
+    });
+
+    $("#stokmiktari").focusout(function(){
+
+        var girilendeger = $('#stokmiktari').val();
+        var dbdeger = $('#productstok').val();
+
+        if(parseInt(girilendeger) > parseInt(dbdeger)){
+           console.log("erdo");
+            Swal.fire({
+                type: 'error',
+                title: 'Stokta Yeterli Mal Yok',
+                text: 'Lütfen Mal Tedariğini Gerçekleştirinizi!',
+            })
+
+        }
+
+    });
+
+</script>
 
 <?php echo form_close(); ?>

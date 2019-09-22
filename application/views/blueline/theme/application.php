@@ -38,16 +38,24 @@ $message_icon = false;
     ?>
 
     <!-- Head CSS and JS -->
-    <script src="<?=base_url()?>assets/blueline/js/plugins/jquery-2.2.4.min.js?ver=<?=$core_settings->version;?>"></script>
 
-    <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/app.css?ver=<?=$core_settings->version;?>"/>
+    <script src="<?=base_url()?>assets/blueline/js/plugins/jquery-2.2.4.min.js?ver=<?=$core_settings->version;?>"></script>
+      <script src="<?=base_url()?>assets/blueline/js/sweetalert2.all.min.js"></script>
+      <script src="<?=base_url()?>assets/blueline/js/custom.js"></script>
+
+      <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/bootstrap.scss/bootstrap.min.css"/>
+      <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/app.css?ver=<?=$core_settings->version;?>"/>
     <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/user.css?ver=<?=$core_settings->version;?>"/>
-    <?=get_theme_colors($core_settings);?>
+      <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/custom.css"/>
+
+      <?=get_theme_colors($core_settings);?>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
     <![endif]-->
 
     <script>
@@ -99,13 +107,7 @@ $message_icon = false;
               <?php
               }
           } ?>
-              <li> <a href="<?=site_url("/products"); ?>" >
-                      <span class="menu-icon">
-                          <i class="fas fa-tags"></i>
-                      </span>
-                      <span class="nav-text">
-                         STOK
-                      </span></a></li>
+
           </ul>
 
     <?php

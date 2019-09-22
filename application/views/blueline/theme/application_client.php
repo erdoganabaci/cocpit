@@ -32,6 +32,7 @@ $message_icon = false;
     <title><?=$core_settings->company;?></title>
 
     <script src="<?=base_url()?>assets/blueline/js/plugins/jquery-2.2.4.min.js?ver=<?=$core_settings->version;?>"></script>
+      <script src="<?=base_url()?>assets/blueline/js/sweetalert2.all.min.js"></script>
 
 
     <?php
@@ -41,7 +42,9 @@ $message_icon = false;
 
     <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/app.css?ver=<?=$core_settings->version;?>"/>
     <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/user.css?ver=<?=$core_settings->version;?>"/>
-    <?=get_theme_colors($core_settings);?>
+      <link rel="stylesheet" href="<?=base_url()?>assets/blueline/css/custom.css"/>
+
+      <?=get_theme_colors($core_settings);?>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
